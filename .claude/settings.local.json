@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__context7__resolve-library-id",
+      "Bash(npm run build:*)",
+      "mcp__context7__get-library-docs",
+      "mcp__inngest__check_workflow_status",
+      "Bash(npx biome check:*)",
+      "Bash(npm test)",
+      "mcp__inngest__search_functions_by_trigger",
+      "mcp__inngest__get_function_runs",
+      "mcp__inngest__get_run_history",
+      "mcp__inngest__list_functions",
+      "mcp__inngest__debug_connection",
+      "WebFetch(domain:www.inngest.com)",
+      "mcp__inngest__get_run_details",
+      "WebSearch",
+      "mcp__inngest__get_event_runs"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "inngest"
+  ]
+}
