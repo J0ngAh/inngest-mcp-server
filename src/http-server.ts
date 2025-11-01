@@ -240,13 +240,13 @@ The event has been sent to Inngest and will trigger any functions listening for 
             result = `Cancelled run ${runId}`;
             break;
 
-          case 'replay':
-            await inngestClient.replayRun(runId);
-            result = `Replayed run ${runId}`;
-            break;
+        case 'replay':
+          await inngestClient.replayRun(runId);
+          result = `Replayed run ${runId}`;
+          break;
 
-          default:
-            result = `Unknown action: ${action}`;
+        default:
+          result = `Unknown action: ${action}`;
         }
 
         return {
@@ -447,6 +447,7 @@ const start = async () => {
   const host = process.env.HOST || '127.0.0.1';
 
   app.listen(port, host, () => {
+    // Use console.log for HTTP server startup messages since this isn't used with stdio
     console.log(`Inngest Event Manager HTTP Server listening on http://${host}:${port}/mcp`);
     console.log(`Health check available at http://${host}:${port}/health`);
   });

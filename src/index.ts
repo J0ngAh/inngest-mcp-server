@@ -17,13 +17,6 @@ const inngestConfig: InngestConfig = {
   env: process.env.INNGEST_ENV,
 };
 
-if (!inngestConfig.signingKey || inngestConfig.signingKey === 'local-dev-key') {
-  console.warn(
-    '⚠️  Using local dev configuration. For production, set INNGEST_SIGNING_KEY environment variable.'
-  );
-  console.log('💡 Make sure Inngest dev server is running: npx inngest-cli@latest dev');
-}
-
 const inngestClient = new InngestClient(inngestConfig);
 
 // Define input schemas
@@ -354,31 +347,21 @@ server.registerResource(
 
 // Start the server
 async function main() {
-  console.log('Starting Inngest Event Manager...');
-  console.log(`Connected to Inngest at: ${inngestConfig.baseUrl}`);
-  console.log('Available tools:');
-  console.log('  - send_event: Send events to trigger Inngest functions');
-  console.log('  - get_event_runs: Get runs for a specific event ID');
-  console.log('  - get_run_details: Get detailed run history and steps');
-  console.log('  - manage_run: Cancel or replay specific runs');
-  console.log('  - debug_connection: Debug API connection and configuration');
-
+  // Remove all console.log statements to prevent stdout pollution
   const transport = new StdioServerTransport();
   await server.connect(transport);
 }
 
 // Handle process signals
 process.on('SIGINT', async () => {
-  console.log('\nShutting down Inngest Event Manager...');
   process.exit(0);
 });
 
 process.on('SIGTERM', async () => {
-  console.log('\nShutting down Inngest Event Manager...');
   process.exit(0);
 });
 
 main().catch((error) => {
-  console.error('Failed to start server:', error);
+  // Only exit on error, no logging
   process.exit(1);
 });
