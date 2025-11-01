@@ -154,7 +154,8 @@ The event has been sent to Inngest and will trigger any functions listening for 
   server.registerTool(
     'get_run_details',
     {
-      description: 'Get run details including status, duration, and output (note: step-by-step timeline not available via REST API)',
+      description:
+        'Get run details including status, duration, and output (note: step-by-step timeline not available via REST API)',
       inputSchema: runHistorySchema,
     },
     async ({ runId }) => {
@@ -162,7 +163,7 @@ The event has been sent to Inngest and will trigger any functions listening for 
         const runDetails = await inngestClient.getRunDetails(runId);
 
         let output = `# Run Details: ${runId}\n\n`;
-        
+
         // Display all available run information
         output += `**Run ID:** ${runDetails.run_id}\n`;
         output += `**Function ID:** ${runDetails.function_id}\n`;
@@ -200,7 +201,8 @@ The event has been sent to Inngest and will trigger any functions listening for 
             output += '\n';
           });
         } else {
-          output += `\n> **Note:** Step-by-step execution timeline is only available in the Inngest dashboard (uses GraphQL). The REST API provides run-level details only.`;
+          output +=
+            '\n> **Note:** Step-by-step execution timeline is only available in the Inngest dashboard (uses GraphQL). The REST API provides run-level details only.';
         }
 
         return {
@@ -240,13 +242,13 @@ The event has been sent to Inngest and will trigger any functions listening for 
             result = `Cancelled run ${runId}`;
             break;
 
-        case 'replay':
-          await inngestClient.replayRun(runId);
-          result = `Replayed run ${runId}`;
-          break;
+          case 'replay':
+            await inngestClient.replayRun(runId);
+            result = `Replayed run ${runId}`;
+            break;
 
-        default:
-          result = `Unknown action: ${action}`;
+          default:
+            result = `Unknown action: ${action}`;
         }
 
         return {

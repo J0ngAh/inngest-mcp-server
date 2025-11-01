@@ -148,7 +148,8 @@ server.registerTool(
 server.registerTool(
   'get_run_details',
   {
-    description: 'Get run details including status, duration, and output (note: step-by-step timeline not available via REST API)',
+    description:
+      'Get run details including status, duration, and output (note: step-by-step timeline not available via REST API)',
     inputSchema: runHistorySchema,
   },
   async ({ runId }) => {
@@ -156,7 +157,7 @@ server.registerTool(
       const runDetails = await inngestClient.getRunDetails(runId);
 
       let output = `# Run Details: ${runId}\n\n`;
-      
+
       // Display all available run information
       output += `**Run ID:** ${runDetails.run_id}\n`;
       output += `**Function ID:** ${runDetails.function_id}\n`;
@@ -194,7 +195,8 @@ server.registerTool(
           output += '\n';
         });
       } else {
-        output += `\n> **Note:** Step-by-step execution timeline is only available in the Inngest dashboard (uses GraphQL). The REST API provides run-level details only.`;
+        output +=
+          '\n> **Note:** Step-by-step execution timeline is only available in the Inngest dashboard (uses GraphQL). The REST API provides run-level details only.';
       }
 
       return {
@@ -361,7 +363,7 @@ process.on('SIGTERM', async () => {
   process.exit(0);
 });
 
-main().catch((error) => {
+main().catch((_error) => {
   // Only exit on error, no logging
   process.exit(1);
 });

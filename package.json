@@ -7,7 +7,9 @@
     "inngest-mcp-server": "./build/index.js",
     "inngest-mcp-http-server": "./build/http-server.js"
   },
-  "files": ["build"],
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch src/index.ts",
@@ -25,20 +27,20 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.17.3",
-    "express": "^4.21.2",
     "cors": "^2.8.5",
+    "express": "^4.21.2",
     "inngest": "^3.22.12",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@types/node": "^20.11.24",
-    "@types/express": "^5.0.0",
     "@types/cors": "^2.8.17",
-    "@vitest/coverage-v8": "^1.0.0",
-    "@vitest/ui": "^1.0.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.11.24",
+    "@vitest/coverage-v8": "^4.0.6",
+    "@vitest/ui": "^4.0.6",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
-    "vitest": "^1.0.0"
+    "vitest": "^4.0.6"
   }
 }

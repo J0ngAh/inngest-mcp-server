@@ -27,7 +27,7 @@ describe('InngestClient', () => {
     output: { result: 'success' },
   };
 
-  const mockWorkflowStep: WorkflowStep = {
+  const _mockWorkflowStep: WorkflowStep = {
     id: 'step-1',
     name: 'process-data',
     status: 'Completed',
@@ -90,7 +90,7 @@ describe('InngestClient', () => {
         signingKey: 'local-dev-key',
         baseUrl: 'http://localhost:8288',
       });
-      
+
       mockFetch.mockResolvedValueOnce(createMockResponse({ data: [] }));
 
       await localClient.getEventRuns('event-123');
@@ -234,7 +234,7 @@ describe('InngestClient', () => {
   describe('bulkCancelRuns', () => {
     it('should handle API errors during bulk cancel', async () => {
       mockFetch.mockResolvedValueOnce(createMockResponse({}, false, 400, 'Bad Request'));
-      
+
       await expect(
         client.bulkCancelRuns({
           functionId: 'func-123',

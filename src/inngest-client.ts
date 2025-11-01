@@ -163,42 +163,40 @@ export class InngestClient {
     }
 
     // Try different API endpoint patterns for Inngest Cloud
-    const possibleEndpoints = [
-      `/v0/runs/${runId}`,
-      `/v1/runs/${runId}`,
-      `/runs/${runId}`,
-    ];
+    const possibleEndpoints = [`/v0/runs/${runId}`, `/v1/runs/${runId}`, `/runs/${runId}`];
 
     let lastError: Error | null = null;
 
     for (const endpoint of possibleEndpoints) {
       try {
         const response = (await this.apiRequest(endpoint)) as { data?: WorkflowRun } | WorkflowRun;
-        
+
         // Handle different response formats
         if ('data' in response && response.data) {
           return response.data;
-        } else if ('run_id' in response) {
+        }
+        if ('run_id' in response) {
           return response as WorkflowRun;
         }
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
         // Store error for debugging
-        (this as any)._lastError = {
+        this._lastError = {
           message: lastError.message,
           timestamp: new Date().toISOString(),
         };
-        continue; // Try next endpoint
       }
     }
 
-    throw new Error(`Failed to get run details for ${runId}. Last error: ${lastError?.message || 'Unknown error'}`);
+    throw new Error(
+      `Failed to get run details for ${runId}. Last error: ${lastError?.message || 'Unknown error'}`
+    );
   }
 
   // Note: Step-by-step execution details are not available via REST API
   // The Inngest dashboard uses GraphQL for timeline/step data
   // This method is kept for backward compatibility but will always return empty
-  async getRunSteps(runId: string): Promise<WorkflowStep[]> {
+  async getRunSteps(_runId: string): Promise<WorkflowStep[]> {
     // Step details are only available via GraphQL (used by dashboard)
     // REST API only provides run-level information
     return [];
@@ -231,15 +229,16 @@ export class InngestClient {
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
         // Store error for debugging
-        (this as any)._lastError = {
+        this._lastError = {
           message: lastError.message,
           timestamp: new Date().toISOString(),
         };
-        continue; // Try next endpoint
       }
     }
 
-    throw new Error(`Failed to cancel run ${runId}. Last error: ${lastError?.message || 'Unknown error'}`);
+    throw new Error(
+      `Failed to cancel run ${runId}. Last error: ${lastError?.message || 'Unknown error'}`
+    );
   }
 
   // Bulk cancel runs
@@ -251,12 +250,12 @@ export class InngestClient {
   }) {
     try {
       const requestBody: Record<string, unknown> = {};
-      
+
       if (params.functionId) requestBody.function_id = params.functionId;
       if (params.startedAfter) requestBody.started_after = params.startedAfter;
       if (params.startedBefore) requestBody.started_before = params.startedBefore;
       if (params.condition) requestBody.if = params.condition;
-      
+
       const response = await this.apiRequest('/v1/cancellations', {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -303,15 +302,16 @@ export class InngestClient {
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
         // Store error for debugging
-        (this as any)._lastError = {
+        this._lastError = {
           message: lastError.message,
           timestamp: new Date().toISOString(),
         };
-        continue; // Try next endpoint
       }
     }
 
-    throw new Error(`Failed to replay run ${runId}. Last error: ${lastError?.message || 'Unknown error'}`);
+    throw new Error(
+      `Failed to replay run ${runId}. Last error: ${lastError?.message || 'Unknown error'}`
+    );
   }
 
   // Send an event to Inngest
