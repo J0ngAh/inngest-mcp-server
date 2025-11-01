@@ -34,3 +34,6 @@ temp/
 
 # MCP configuration (contains user-specific paths)
 .mcp.json
+
+# Claude
+.claude
